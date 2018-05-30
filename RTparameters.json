@@ -1,0 +1,12 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "routeTables_DMZ_RT_name": {
+            "value": "DMZ-RT"
+        },
+        "routes_All_To_PA_name": {
+            "value": "All to PA"
+        }
+    }
+}

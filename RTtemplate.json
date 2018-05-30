@@ -1,0 +1,55 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "routeTables_DMZ_RT_name": {
+            "defaultValue": "DMZ-RT",
+            "type": "String"
+        },
+        "routes_All_To_PA_name": {
+            "defaultValue": "All-To-PA",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/routeTables",
+            "name": "[parameters('routeTables_DMZ_RT_name')]",
+            "apiVersion": "2018-02-01",
+           "location": "[parameters('location')]",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "disableBgpRoutePropagation": true,
+                "routes": [
+                    {
+                        "name": "All-To-PA",
+                            "properties": {
+                            "provisioningState": "Succeeded",
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "192.168.4.4"
+                        }
+                    }
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Network/routeTables/routes",
+            "name": "[concat(parameters('routeTables_DMZ_RT_name'), '/', parameters('routes_All_To_PA_name'))]",
+            "apiVersion": "2018-02-01",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "0.0.0.0/0",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "192.168.4.4"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_DMZ_RT_name'))]"
+            ]
+        }
+    ]
+}
