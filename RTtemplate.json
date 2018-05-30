@@ -23,7 +23,7 @@
             "type": "Microsoft.Network/routeTables",
             "name": "[parameters('routeTables_DMZ_RT_name')]",
             "apiVersion": "2018-02-01",
-           "location": "[parameters('location')]",
+           "location": "East US",
             "scale": null,
             "properties": {
                 "provisioningState": "Succeeded",
